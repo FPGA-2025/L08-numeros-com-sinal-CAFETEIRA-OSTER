@@ -1,0 +1,87 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x556b7864c490 .scope module, "numeros_com_sinal" "numeros_com_sinal" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "entrada_signed_1";
+    .port_info 1 /INPUT 4 "entrada_signed_2";
+    .port_info 2 /INPUT 8 "entrada_unsigned_1";
+    .port_info 3 /INPUT 4 "entrada_unsigned_2";
+    .port_info 4 /INPUT 2 "codigo";
+    .port_info 5 /OUTPUT 8 "saida";
+o0x7f91a2cb7018 .functor BUFZ 2, C4<zz>; HiZ drive
+v0x556b7864c6c0_0 .net "codigo", 1 0, o0x7f91a2cb7018;  0 drivers
+o0x7f91a2cb7048 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x556b78695700_0 .net/s "entrada_signed_1", 7 0, o0x7f91a2cb7048;  0 drivers
+o0x7f91a2cb7078 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x556b786957e0_0 .net/s "entrada_signed_2", 3 0, o0x7f91a2cb7078;  0 drivers
+o0x7f91a2cb70a8 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x556b786958a0_0 .net "entrada_unsigned_1", 7 0, o0x7f91a2cb70a8;  0 drivers
+o0x7f91a2cb70d8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x556b78695980_0 .net "entrada_unsigned_2", 3 0, o0x7f91a2cb70d8;  0 drivers
+v0x556b78695ab0_0 .var "saida", 7 0;
+E_0x556b78685920/0 .event anyedge, v0x556b7864c6c0_0, v0x556b78695700_0, v0x556b786957e0_0, v0x556b786958a0_0;
+E_0x556b78685920/1 .event anyedge, v0x556b78695980_0;
+E_0x556b78685920 .event/or E_0x556b78685920/0, E_0x556b78685920/1;
+    .scope S_0x556b7864c490;
+T_0 ;
+    %wait E_0x556b78685920;
+    %load/vec4 v0x556b7864c6c0_0;
+    %cmpi/e 0, 0, 2;
+    %flag_mov 8, 4;
+    %jmp/0 T_0.0, 8;
+    %load/vec4 v0x556b78695700_0;
+    %load/vec4 v0x556b786957e0_0;
+    %pad/u 8;
+    %add;
+    %jmp/1 T_0.1, 8;
+T_0.0 ; End of true expr.
+    %load/vec4 v0x556b7864c6c0_0;
+    %cmpi/e 1, 0, 2;
+    %flag_mov 9, 4;
+    %jmp/0 T_0.2, 9;
+    %load/vec4 v0x556b786958a0_0;
+    %load/vec4 v0x556b78695980_0;
+    %pad/u 8;
+    %add;
+    %jmp/1 T_0.3, 9;
+T_0.2 ; End of true expr.
+    %load/vec4 v0x556b7864c6c0_0;
+    %cmpi/e 2, 0, 2;
+    %flag_mov 10, 4;
+    %jmp/0 T_0.4, 10;
+    %load/vec4 v0x556b786958a0_0;
+    %load/vec4 v0x556b78695700_0;
+    %add;
+    %jmp/1 T_0.5, 10;
+T_0.4 ; End of true expr.
+    %load/vec4 v0x556b786958a0_0;
+    %load/vec4 v0x556b786957e0_0;
+    %pad/u 8;
+    %add;
+    %jmp/0 T_0.5, 10;
+ ; End of false expr.
+    %blend;
+T_0.5;
+    %jmp/0 T_0.3, 9;
+ ; End of false expr.
+    %blend;
+T_0.3;
+    %jmp/0 T_0.1, 8;
+ ; End of false expr.
+    %blend;
+T_0.1;
+    %store/vec4 v0x556b78695ab0_0, 0, 8;
+    %jmp T_0;
+    .thread T_0, $push;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "numeros_com_sinal.v";
